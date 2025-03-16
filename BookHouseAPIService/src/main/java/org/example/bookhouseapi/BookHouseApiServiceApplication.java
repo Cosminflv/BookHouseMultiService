@@ -1,4 +1,4 @@
-package org.example.bookhouseapiservice;
+package org.example.bookhouseapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
