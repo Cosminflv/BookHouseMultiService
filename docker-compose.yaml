@@ -1,0 +1,70 @@
+version: '1'
+
+services:
+  # Auth Service + DB
+  auth_db:
+    image: postgres:15-alpine
+    container_name: bookhouse_db
+    environment:
+      POSTGRES_DB: BookHouseDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 'qaz123//'
+    volumes:
+      - postgres_auth_data:/var/lib/postgresql/data
+    networks:
+      - bookhouse_network
+
+  auth_app:
+    build:
+      context: ./BookHouseAuthService  # Path to Auth service project
+      dockerfile: Dockerfile
+    container_name: bookhouse_auth
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth_db:5432/BookHouseDb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 'qaz123//'
+      SERVER_ADDRESS: 0.0.0.0  # Allow external connections
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth_db
+    networks:
+      - bookhouse_network
+
+  # API Service + DB
+  api_db:
+    image: postgres:15-alpine
+    container_name: bookhouseapi_db
+    environment:
+      POSTGRES_DB: BookHouseAPIDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 'qaz123//'
+    volumes:
+      - postgres_api_data:/var/lib/postgresql/data
+    networks:
+      - bookhouse_network
+
+  api_app:
+    build:
+      context: ./BookHouseAPIService   # Path to API service project
+      dockerfile: Dockerfile
+    container_name: bookhouse_api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://api_db:5432/BookHouseAPIDb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 'qaz123//'
+      AUTH_SERVICE_URL: 'http://auth_app:8080'
+    ports:
+      - "8081:8081"
+    depends_on:
+      - api_db
+      - auth_app  # Wait for Auth service to be ready
+    networks:
+      - bookhouse_network
+
+volumes:
+  postgres_auth_data:
+  postgres_api_data:
+
+networks:
+  bookhouse_network:

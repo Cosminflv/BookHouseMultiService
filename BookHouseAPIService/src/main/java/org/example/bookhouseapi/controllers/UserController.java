@@ -6,6 +6,7 @@ import org.example.bookhouseapi.dtos.LoginResponse;
 import org.example.bookhouseapi.models.UserEntity;
 import org.example.bookhouseapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,10 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserController {
     private final UserService userService;
     private final RestTemplate restTemplate;
-    private static final String AUTH_SERVICE_URL = "http://localhost:8080";
+    //private static final String AUTH_SERVICE_URL = "http://localhost:8080";
+
+    @Value("${auth.service.url}")
+    private String authServiceUrl;
 
     @Autowired
     public UserController(RestTemplate restTemplate, UserService userService) {
@@ -44,7 +48,7 @@ public class UserController {
         HttpEntity<UserEntity> entity = new HttpEntity<>(user, headers);
 
         // Define the URL of the downstream service
-        String url = AUTH_SERVICE_URL + "/addUser";
+        String url = authServiceUrl + "/addUser";
         try {
 
             UserEntity userResponse = restTemplate.postForObject(url, entity, UserEntity.class);
@@ -59,7 +63,7 @@ public class UserController {
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
-        String url = AUTH_SERVICE_URL + "/login";
+        String url = authServiceUrl + "/login";
         try {
             return restTemplate.postForObject(url, request, LoginResponse.class);
         } catch (HttpClientErrorException e) {
