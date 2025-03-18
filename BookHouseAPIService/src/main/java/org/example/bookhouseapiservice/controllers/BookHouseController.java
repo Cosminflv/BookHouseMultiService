@@ -1,9 +1,9 @@
-package org.example.bookhouseapi.controllers;
+package org.example.bookhouseapiservice.controllers;
 
-import org.example.bookhouseapi.dtos.AddBookRequest;
-import org.example.bookhouseapi.models.BookEntity;
-import org.example.bookhouseapi.models.BookHouseEntity;
-import org.example.bookhouseapi.services.BookHouseService;
+import org.example.bookhouseapiservice.dtos.AddBookRequest;
+import org.example.bookhouseapiservice.models.BookEntity;
+import org.example.bookhouseapiservice.models.BookHouseEntity;
+import org.example.bookhouseapiservice.services.BookHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;

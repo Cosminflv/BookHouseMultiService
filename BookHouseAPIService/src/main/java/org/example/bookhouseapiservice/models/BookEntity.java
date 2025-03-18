@@ -1,4 +1,4 @@
-package org.example.bookhouseapi.models;
+package org.example.bookhouseapiservice.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;

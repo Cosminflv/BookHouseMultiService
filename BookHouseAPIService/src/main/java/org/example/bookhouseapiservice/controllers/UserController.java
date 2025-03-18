@@ -1,10 +1,10 @@
-package org.example.bookhouseapi.controllers;
+package org.example.bookhouseapiservice.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.example.bookhouseapi.dtos.LoginRequest;
-import org.example.bookhouseapi.dtos.LoginResponse;
-import org.example.bookhouseapi.models.UserEntity;
-import org.example.bookhouseapi.services.UserService;
+import org.example.bookhouseapiservice.dtos.LoginRequest;
+import org.example.bookhouseapiservice.dtos.LoginResponse;
+import org.example.bookhouseapiservice.models.UserEntity;
+import org.example.bookhouseapiservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

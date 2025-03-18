@@ -1,4 +1,4 @@
-package org.example.bookhouseapi.models.enums;
+package org.example.bookhouseapiservice.models.enums;
 
 public enum EUserType {
     administrator,

@@ -1,4 +1,4 @@
-package org.example.bookhouseapi.config;
+package org.example.bookhouseapiservice.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

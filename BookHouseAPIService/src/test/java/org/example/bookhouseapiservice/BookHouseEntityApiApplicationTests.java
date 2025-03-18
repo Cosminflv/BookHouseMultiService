@@ -1,4 +1,4 @@
-package org.example.bookhouseapi;
+package org.example.bookhouseapiservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

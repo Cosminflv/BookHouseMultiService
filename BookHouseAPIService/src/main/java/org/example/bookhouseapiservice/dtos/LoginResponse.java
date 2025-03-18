@@ -1,4 +1,4 @@
-package org.example.bookhouseapi.dtos;
+package org.example.bookhouseapiservice.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

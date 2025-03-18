@@ -1,4 +1,4 @@
-package org.example.bookhouseapi.config;
+package org.example.bookhouseapiservice.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

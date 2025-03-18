@@ -1,9 +1,9 @@
-package org.example.bookhouseapi.models;
+package org.example.bookhouseapiservice.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.bookhouseapi.models.enums.EUserType;
+import org.example.bookhouseapiservice.models.enums.EUserType;
 
 import java.util.List;
 

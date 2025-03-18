@@ -1,10 +1,10 @@
-package org.example.bookhouseapi.dtos;
+package org.example.bookhouseapiservice.dtos;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.bookhouseapi.models.BookEntity;
+import org.example.bookhouseapiservice.models.BookEntity;
 
 @Getter
 @Setter

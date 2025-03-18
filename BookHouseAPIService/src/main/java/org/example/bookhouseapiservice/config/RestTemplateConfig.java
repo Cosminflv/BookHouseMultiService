@@ -1,4 +1,4 @@
-package org.example.bookhouseapi.config;
+package org.example.bookhouseapiservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

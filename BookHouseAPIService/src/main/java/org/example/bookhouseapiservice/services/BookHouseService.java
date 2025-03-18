@@ -1,10 +1,10 @@
-package org.example.bookhouseapi.services;
+package org.example.bookhouseapiservice.services;
 
 import jakarta.transaction.Transactional;
-import org.example.bookhouseapi.models.BookEntity;
-import org.example.bookhouseapi.models.BookHouseEntity;
-import org.example.bookhouseapi.models.UserEntity;
-import org.example.bookhouseapi.repos.BookHouseRepository;
+import org.example.bookhouseapiservice.models.BookEntity;
+import org.example.bookhouseapiservice.models.BookHouseEntity;
+import org.example.bookhouseapiservice.models.UserEntity;
+import org.example.bookhouseapiservice.repos.BookHouseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
