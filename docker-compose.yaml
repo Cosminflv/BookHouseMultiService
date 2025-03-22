@@ -14,7 +14,7 @@ services:
     networks:
       - bookhouse_network
 
-  auth_app:
+  auth-app:
     build:
       context: ./BookHouseAuthService  # Path to Auth service project
       dockerfile: Dockerfile
@@ -44,7 +44,7 @@ services:
     networks:
       - bookhouse_network
 
-  api_app:
+  api-app:
     build:
       context: ./BookHouseAPIService   # Path to API service project
       dockerfile: Dockerfile
@@ -53,12 +53,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://api_db:5432/BookHouseAPIDb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 'qaz123//'
-      AUTH_SERVICE_URL: 'http://auth_app:8080'
+      AUTH_SERVICE_URL: 'http://auth-app:8080'
     ports:
       - "8081:8081"
     depends_on:
       - api_db
-      - auth_app  # Wait for Auth service to be ready
+      - auth-app  # Wait for Auth service to be ready
     networks:
       - bookhouse_network
 

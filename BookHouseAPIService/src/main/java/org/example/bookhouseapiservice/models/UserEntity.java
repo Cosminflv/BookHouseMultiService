@@ -12,12 +12,13 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class UserEntity {
-
     @Id
     private Long id;
 
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private EUserType userType;
 
     @ManyToOne

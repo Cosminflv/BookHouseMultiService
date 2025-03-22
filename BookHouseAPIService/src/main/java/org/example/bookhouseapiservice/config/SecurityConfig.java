@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/login").permitAll()
+                        .requestMatchers("/users/users").permitAll()
                         .requestMatchers(
                                 "/bookhouse/getBooks",
                                 "/bookhouse/addBook",
