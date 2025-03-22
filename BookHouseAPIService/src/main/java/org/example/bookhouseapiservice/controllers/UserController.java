@@ -75,13 +75,23 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<UserEntity> getAllUsers() {
+    public List<UserEntity> getAllUsers(HttpServletRequest request) {
         String url = authServiceUrl + "/users";
+
+        // Extract the token from the incoming request header
+        String token = request.getHeader("Authorization");
+
+        // Create headers for the outgoing request and add the Authorization header
+        HttpHeaders headers = new HttpHeaders();
+        if (token != null && !token.isEmpty()) {
+            headers.set("Authorization", token);
+        }
+
         try {
             ResponseEntity<List<UserEntity>> response = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
-                    null,
+                    new HttpEntity<>(headers),
                     new ParameterizedTypeReference<List<UserEntity>>() {}
             );
             return response.getBody();

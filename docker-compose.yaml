@@ -1,5 +1,3 @@
-version: '1'
-
 services:
   # Auth Service + DB
   auth_db:
