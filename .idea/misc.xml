@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/BookHouseAPIService/pom.xml" />
         <option value="$PROJECT_DIR$/BookHouseAuthService/pom.xml" />
+        <option value="$PROJECT_DIR$/BookHouseGUI/pom.xml" />
       </list>
     </option>
   </component>
