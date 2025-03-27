@@ -3,10 +3,8 @@ package org.example.bookhouseapiservice.controllers;
 import org.example.bookhouseapiservice.dtos.AddBookRequest;
 import org.example.bookhouseapiservice.dtos.BookHouseBookDTO;
 import org.example.bookhouseapiservice.dtos.BookHouseDTO;
-import org.example.bookhouseapiservice.models.BookEntity;
 import org.example.bookhouseapiservice.models.BookHouseEntity;
 import org.example.bookhouseapiservice.models.BorrowedBookEntity;
-import org.example.bookhouseapiservice.models.UserEntity;
 import org.example.bookhouseapiservice.services.BookHouseService;
 import org.example.bookhouseapiservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,5 +85,4 @@ public class BookHouseController {
                 })
         );
     }
-
 }

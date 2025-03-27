@@ -149,10 +149,10 @@ public class BookHouseService {
     }
 
     @Transactional
-    public Optional<BookEntity> decreaseBookStock(Long bookHouseId, Long bookId) {
+    public void decreaseBookStock(Long bookHouseId, Long bookId) {
         Optional<BookHouseEntity> foundBookHouse = bookHouseRepository.findById(bookHouseId);
 
-        if (foundBookHouse.isEmpty()) return Optional.empty();
+        if (foundBookHouse.isEmpty()) return;
 
         BookHouseEntity bookHouse = foundBookHouse.get();
 
@@ -166,13 +166,10 @@ public class BookHouseService {
             if (book.getTotalStock() > 0) {
                 book.setTotalStock(book.getTotalStock() - 1);
                 bookHouseRepository.save(bookHouse); // Save the changes
-                return Optional.of(book);
             } else {
                 // Stock is already zero, cannot decrease further
-                return Optional.empty();
             }
         }
 
-        return Optional.empty(); // Book not found
     }
 }

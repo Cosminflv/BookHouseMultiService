@@ -1,7 +1,6 @@
 package org.example.bookhouseapiservice.services;
 
 import jakarta.transaction.Transactional;
-import org.antlr.v4.runtime.atn.SemanticContext;
 import org.example.bookhouseapiservice.models.BorrowedBookEntity;
 import org.example.bookhouseapiservice.models.UserEntity;
 import org.example.bookhouseapiservice.repos.UserRepository;
