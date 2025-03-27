@@ -10,6 +10,7 @@
     <!-- Welcome Message -->
     <div class="welcome-message" th:if="${currentUser != null}">
         <h1>Welcome Back, <span th:text="${currentUser.username}"></span></h1>
+        <h2>Book house: <span th:text="${bookHouse.location}"></span></h2>
     </div>
 
     <!-- Available Books Section -->
