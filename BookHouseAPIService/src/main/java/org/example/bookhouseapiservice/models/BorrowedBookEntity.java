@@ -25,6 +25,6 @@ public class BorrowedBookEntity {
     private BookEntity book;
 
     private LocalDateTime borrowedAt = LocalDateTime.now();
-    private LocalDateTime returnDate;
+    private LocalDateTime returnDate = LocalDateTime.now().plusMonths(1);
     private boolean returned = false;
 }

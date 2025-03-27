@@ -1,6 +1,8 @@
 package org.example.bookhouseapiservice.controllers;
 
 import org.example.bookhouseapiservice.dtos.AddBookRequest;
+import org.example.bookhouseapiservice.dtos.BookHouseBookDTO;
+import org.example.bookhouseapiservice.dtos.BookHouseDTO;
 import org.example.bookhouseapiservice.models.BookEntity;
 import org.example.bookhouseapiservice.models.BookHouseEntity;
 import org.example.bookhouseapiservice.services.BookHouseService;
@@ -24,7 +26,7 @@ public class BookHouseController {
     // GET
 
     @GetMapping("/getBooks")
-    public List<BookEntity> getBooks(@RequestParam Long bookHouseId) {
+    public List<BookHouseBookDTO> getBooks(@RequestParam Long bookHouseId) {
         try{
             return bookHouseService.getAllBooksFromBookHouse(bookHouseId);
         } catch (HttpClientErrorException e) {
@@ -33,9 +35,9 @@ public class BookHouseController {
     }
 
     @GetMapping("/getBookHouse")
-    public BookHouseEntity getBookHouse(@RequestParam Long bookHouseId) {
+    public BookHouseDTO getBookHouse(@RequestParam Long bookHouseId) {
         try{
-            BookHouseEntity bookHouse = bookHouseService.getBookHouseById(bookHouseId);
+            BookHouseDTO bookHouse = bookHouseService.getBookHouseById(bookHouseId);
             return bookHouse;
         } catch(HttpClientErrorException e) {
             throw new ResponseStatusException(e.getStatusCode(), e.getResponseBodyAsString());

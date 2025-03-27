@@ -1,9 +1,14 @@
 package org.example.bookhouseapiservice.services;
 
 import jakarta.transaction.Transactional;
+import org.antlr.v4.runtime.atn.SemanticContext;
+import org.example.bookhouseapiservice.models.BorrowedBookEntity;
 import org.example.bookhouseapiservice.models.UserEntity;
 import org.example.bookhouseapiservice.repos.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,4 +25,16 @@ public class UserService {
 
     @Transactional
     public UserEntity getUser(Long userId) { return userRepository.findById(userId).orElse(null); }
+
+    @Transactional
+    public List<BorrowedBookEntity> getBorrowedBooks(Long userId) {
+        Optional<UserEntity> foundUser = userRepository.findById(userId);
+
+        if (foundUser.isPresent()) {
+            List<BorrowedBookEntity> borrowedBooks = foundUser.get().getBorrowedBooks();
+            return borrowedBooks;
+        }
+
+    return List.of();
+    }
 }

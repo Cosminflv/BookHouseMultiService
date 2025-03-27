@@ -1,4 +1,4 @@
-package org.example.bookhousegui.models;
+package org.example.bookhousegui.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,14 +8,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserEntity {
+public class BookHouseUserDTO {
     private Long id;
-
     private String username;
-
     private EUserType userType;
-
-    private Long bookHouseEntityId;
-
-    private List<BorrowedBookEntity> borrowedBooks;
+    private List<Long> bookHouseSubscriptionIds;
+    private List<Long> borrowedBooksIds;
 }

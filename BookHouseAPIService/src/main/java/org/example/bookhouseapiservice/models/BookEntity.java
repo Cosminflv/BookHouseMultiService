@@ -24,7 +24,4 @@ public class BookEntity {
     @ManyToOne
     @JoinColumn(name = "bookhouse_id", nullable = false)
     private BookHouseEntity bookHouseEntity;
-
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BorrowedBookEntity> borrowedBooks;
 }

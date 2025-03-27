@@ -1,6 +1,8 @@
 package org.example.bookhousegui.controllers;
 
 import jakarta.servlet.http.HttpSession;
+import org.example.bookhousegui.dtos.BookHouseDTO;
+import org.example.bookhousegui.dtos.UserEntityDTO;
 import org.example.bookhousegui.models.BookHouseEntity;
 import org.example.bookhousegui.models.UserEntity;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import static org.example.bookhousegui.utils.Converters.convertBookHouseToEntity;
+import static org.example.bookhousegui.utils.Converters.convertUserToEntity;
+
 
 @Controller
 public class MainController {
@@ -41,25 +45,34 @@ public class MainController {
         long userId = 1;
         long bookHouseId = 1; // Example ID
 
-        BookHouseEntity bookHouse = restTemplate.exchange(
+        BookHouseDTO bookHouseDto = restTemplate.exchange(
                 "http://localhost:8081/bookhouse/getBookHouse?bookHouseId={bookHouseId}",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                new ParameterizedTypeReference<BookHouseEntity>() {},
+                BookHouseDTO.class, // Use the DTO class here
                 bookHouseId
         ).getBody();
 
-        UserEntity user = restTemplate.exchange(
+        // Convert DTO to your GUI's BookHouseEntity (see Step 3)
+        BookHouseEntity bookHouse = convertBookHouseToEntity(bookHouseDto);
+
+
+
+        model.addAttribute("bookHouse", bookHouse);
+
+        UserEntityDTO userDTO = restTemplate.exchange(
                 "http://localhost:8081/bookhouse/getUser?userId={userId}",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                new ParameterizedTypeReference<UserEntity>() {
+                new ParameterizedTypeReference<UserEntityDTO>() {
                 },
                 userId
         ).getBody();
 
+        UserEntity userEntity = convertUserToEntity(userDTO);
+
         model.addAttribute("bookHouse", bookHouse);
-        model.addAttribute("currentUser", user);
+        model.addAttribute("currentUser", userEntity);
 
         return "dashboard";
     }

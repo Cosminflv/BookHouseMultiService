@@ -2,8 +2,8 @@ package org.example.bookhouseapiservice.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.bookhouseapiservice.dtos.AddUserRequest;
-import org.example.bookhouseapiservice.dtos.LoginRequest;
-import org.example.bookhouseapiservice.dtos.LoginResponse;
+import org.example.bookhouseapiservice.dtos.BorrowedBookEntityDTO;
+import org.example.bookhouseapiservice.models.BorrowedBookEntity;
 import org.example.bookhouseapiservice.models.UserEntity;
 import org.example.bookhouseapiservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.example.bookhouseapiservice.utils.Converters.convertBorrowedBookToDTO;
 
 @RestController
 @RequestMapping("/users")
@@ -35,6 +37,20 @@ public class UserController {
     public UserController(RestTemplate restTemplate, UserService userService) {
         this.restTemplate = restTemplate;
         this.userService = userService;
+    }
+
+    @GetMapping("/borrowedBooks")
+    public List<BorrowedBookEntityDTO> getBorrowedBooks(@RequestParam Long userId) {
+        List<BorrowedBookEntity> borrowedBooks = userService.getBorrowedBooks(userId);
+
+        List<BorrowedBookEntityDTO> borrowedBooksDTO = new ArrayList<>();
+
+        for(BorrowedBookEntity entity : borrowedBooks) {
+            BorrowedBookEntityDTO dto = convertBorrowedBookToDTO(entity);
+            borrowedBooksDTO.add(dto);
+        }
+
+        return borrowedBooksDTO;
     }
 
         @PostMapping("/addUser")

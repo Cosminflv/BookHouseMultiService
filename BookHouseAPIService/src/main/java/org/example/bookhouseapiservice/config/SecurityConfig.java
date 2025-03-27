@@ -28,6 +28,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/bookhouse/getBooks",
                                 "/bookhouse/getBookHouse",
+                                "/users/borrowedBooks",
                                 "/bookhouse/addBook",
                                 "/bookhouse/addBookhouse",
                                 "/users/addUser",

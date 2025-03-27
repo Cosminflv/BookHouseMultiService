@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 public class BorrowedBookEntity {
     private Long id;
 
-    private UserEntity user;
+    private UserEntity borrower;
 
-    private BookEntity book;
+    private String title;
+    private String author;
+    private String isbn;
 
     private LocalDateTime borrowedAt = LocalDateTime.now();
     private LocalDateTime returnDate;
