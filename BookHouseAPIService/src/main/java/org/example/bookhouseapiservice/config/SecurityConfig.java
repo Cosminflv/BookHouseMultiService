@@ -32,7 +32,8 @@ public class SecurityConfig {
                                 "/bookhouse/addBook",
                                 "/bookhouse/addBookhouse",
                                 "/users/addUser",
-                                "users/users"
+                                "/users/users",
+                                "/users/user"
                         ).authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

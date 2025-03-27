@@ -1,20 +1,21 @@
 package org.example.bookhousegui.models;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 public class BorrowedBookEntity {
     private Long id;
-
-    private UserEntity borrower;
 
     private String title;
     private String author;
     private String isbn;
 
-    private LocalDateTime borrowedAt = LocalDateTime.now();
+    private LocalDateTime borrowedAt;
     private LocalDateTime returnDate;
-    private boolean returned = false;
+
+    private boolean returned;
 }

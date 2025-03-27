@@ -16,4 +16,5 @@ public class BorrowedBookEntityDTO {
 
     private LocalDateTime borrowedAt;
     private LocalDateTime returnDate;
+    private boolean returned = false;
 }

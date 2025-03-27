@@ -24,7 +24,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserEntity getUser(Long userId) { return userRepository.findById(userId).orElse(null); }
+    public Optional<UserEntity> getUser(Long userId) { return userRepository.findById(userId); }
 
     @Transactional
     public List<BorrowedBookEntity> getBorrowedBooks(Long userId) {

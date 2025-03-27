@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.example.bookhousegui.dtos.BookHouseDTO;
 import org.example.bookhousegui.dtos.UserEntityDTO;
 import org.example.bookhousegui.models.BookHouseEntity;
+import org.example.bookhousegui.models.BorrowedBookEntity;
 import org.example.bookhousegui.models.UserEntity;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 import static org.example.bookhousegui.utils.Converters.convertBookHouseToEntity;
 import static org.example.bookhousegui.utils.Converters.convertUserToEntity;
@@ -42,7 +45,7 @@ public class MainController {
             headers.set("Authorization", "Bearer " + token);
         }
 
-        long userId = 1;
+        long userId = 6;
         long bookHouseId = 1; // Example ID
 
         BookHouseDTO bookHouseDto = restTemplate.exchange(
@@ -61,15 +64,25 @@ public class MainController {
         model.addAttribute("bookHouse", bookHouse);
 
         UserEntityDTO userDTO = restTemplate.exchange(
-                "http://localhost:8081/bookhouse/getUser?userId={userId}",
+                "http://localhost:8081/users/user?userId={userId}",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                new ParameterizedTypeReference<UserEntityDTO>() {
-                },
+                new ParameterizedTypeReference<UserEntityDTO>() {},
                 userId
         ).getBody();
 
         UserEntity userEntity = convertUserToEntity(userDTO);
+        Long userIdRetrieved = userEntity.getId();
+
+        List<BorrowedBookEntity> borrowedBooks = restTemplate.exchange(
+                "http://localhost:8081/users/borrowedBooks?userId={userIdRetrieved}",
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                new ParameterizedTypeReference<List<BorrowedBookEntity>>() {},
+                userIdRetrieved
+        ).getBody();
+
+        userEntity.setBorrowedBooks(borrowedBooks);
 
         model.addAttribute("bookHouse", bookHouse);
         model.addAttribute("currentUser", userEntity);

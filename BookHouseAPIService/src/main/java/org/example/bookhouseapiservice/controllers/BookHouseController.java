@@ -3,7 +3,6 @@ package org.example.bookhouseapiservice.controllers;
 import org.example.bookhouseapiservice.dtos.AddBookRequest;
 import org.example.bookhouseapiservice.dtos.BookHouseBookDTO;
 import org.example.bookhouseapiservice.dtos.BookHouseDTO;
-import org.example.bookhouseapiservice.models.BookEntity;
 import org.example.bookhouseapiservice.models.BookHouseEntity;
 import org.example.bookhouseapiservice.services.BookHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class BookHouseController {
     @GetMapping("/getBookHouse")
     public BookHouseDTO getBookHouse(@RequestParam Long bookHouseId) {
         try{
-            BookHouseDTO bookHouse = bookHouseService.getBookHouseById(bookHouseId);
+            BookHouseDTO bookHouse = bookHouseService.getBookHouseDTOById(bookHouseId);
             return bookHouse;
         } catch(HttpClientErrorException e) {
             throw new ResponseStatusException(e.getStatusCode(), e.getResponseBodyAsString());

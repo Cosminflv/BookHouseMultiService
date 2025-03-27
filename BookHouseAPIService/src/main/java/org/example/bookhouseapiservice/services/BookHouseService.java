@@ -15,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +47,11 @@ public class BookHouseService {
         return bookDTOs;
     }
 
-    public BookHouseDTO getBookHouseById(Long bookHouseId) {
+    public Optional<BookHouseEntity> getBookHouseById(Long id) {
+        return bookHouseRepository.findById(id);
+    }
+
+    public BookHouseDTO getBookHouseDTOById(Long bookHouseId) {
         BookHouseEntity entity = bookHouseRepository.findById(bookHouseId)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "BookHouse not found"));
 
