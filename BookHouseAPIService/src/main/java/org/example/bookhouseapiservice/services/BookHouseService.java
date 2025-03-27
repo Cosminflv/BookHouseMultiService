@@ -136,4 +136,43 @@ public class BookHouseService {
 
         return bookHouseRepository.save(bookHouse);
     }
+
+    @Transactional
+    public Optional<BookEntity> getBook(Long bookHouseId, Long bookId) {
+        Optional<BookHouseEntity> foundBookHouse = bookHouseRepository.findById(bookHouseId);
+
+        return foundBookHouse.flatMap(bookHouseEntity -> bookHouseEntity
+                .getBooks()
+                .stream()
+                .filter(book -> book.getId().equals(bookId))
+                .findFirst());
+    }
+
+    @Transactional
+    public Optional<BookEntity> decreaseBookStock(Long bookHouseId, Long bookId) {
+        Optional<BookHouseEntity> foundBookHouse = bookHouseRepository.findById(bookHouseId);
+
+        if (foundBookHouse.isEmpty()) return Optional.empty();
+
+        BookHouseEntity bookHouse = foundBookHouse.get();
+
+        Optional<BookEntity> bookOptional = bookHouse.getBooks().stream()
+                .filter(book -> book.getId().equals(bookId))
+                .findFirst();
+
+        if (bookOptional.isPresent()) {
+            BookEntity book = bookOptional.get();
+
+            if (book.getTotalStock() > 0) {
+                book.setTotalStock(book.getTotalStock() - 1);
+                bookHouseRepository.save(bookHouse); // Save the changes
+                return Optional.of(book);
+            } else {
+                // Stock is already zero, cannot decrease further
+                return Optional.empty();
+            }
+        }
+
+        return Optional.empty(); // Book not found
+    }
 }

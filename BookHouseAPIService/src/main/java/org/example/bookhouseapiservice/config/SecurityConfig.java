@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 "/users/borrowedBooks",
                                 "/bookhouse/addBook",
                                 "/bookhouse/addBookhouse",
+                                "/bookhouse/borrowBook",
                                 "/users/addUser",
                                 "/users/users",
                                 "/users/user"

@@ -1,7 +1,9 @@
 package org.example.bookhouseapiservice.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "borrowed_books")
+@AllArgsConstructor
+@NoArgsConstructor
 public class BorrowedBookEntity {
 
     @Id
