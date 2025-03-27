@@ -13,6 +13,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -89,6 +91,37 @@ public class MainController {
         model.addAttribute("currentUser", userEntity);
 
         return "dashboard";
+    }
+
+    @PostMapping("/borrowBook")
+    public String borrowBook(@RequestParam("bookId") Long bookId, Model model, HttpSession session) {
+        // Check if user is authenticated
+        if (session.getAttribute("authToken") == null) {
+            return "redirect:/login";
+        }
+
+        // Retrieve token and userId from session
+        String token = (String) session.getAttribute("authToken");
+        Long userId = (Long) session.getAttribute("userId");
+
+        // Create headers and add Authorization
+        HttpHeaders headers = new HttpHeaders();
+        if (token != null && !token.isEmpty()) {
+            headers.set("Authorization", "Bearer " + token);
+        }
+
+        // Call the API service to borrow the book using POST request
+        restTemplate.exchange(
+                "http://localhost:8081/bookhouse/borrowBook?userId={userId}&bookId={bookId}",
+                HttpMethod.POST,
+                new HttpEntity<>(headers),
+                Void.class,
+                userId, bookId
+        );
+
+        // Optionally, add any messages to the model here (e.g., success message)
+
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/logout")

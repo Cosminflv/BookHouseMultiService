@@ -14,6 +14,7 @@
     </div>
 
     <!-- Available Books Section -->
+    <!-- Available Books Section -->
     <div class="section available-books" th:if="${bookHouse != null and !bookHouse.books.isEmpty()}">
         <h2>📚 Available Books</h2>
         <table>
@@ -24,6 +25,7 @@
                 <th>ISBN</th>
                 <th>Available Copies</th>
                 <th>Location</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -33,10 +35,53 @@
                 <td th:text="${book.isbn}"></td>
                 <td th:text="${book.totalStock}"></td>
                 <td th:text="${book.bookHouseEntity.location}"></td>
+                <td>
+                    <form th:action="@{/borrowBook}" method="post">
+                        <input type="hidden" name="bookId" th:value="${book.id}">
+                        <button type="submit" onclick="return confirm('Are you sure you want to borrow this book?')">
+                            Borrow
+                        </button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Are you sure you want to borrow this book?</p>
+            <form id="borrowForm" method="post" th:action="@{/borrowBook}">
+                <input type="hidden" id="bookId" name="bookId" value="">
+                <button type="submit">Yes</button>
+                <button type="button" onclick="closeModal()">No</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript for modal handling -->
+    <script>
+        function openConfirmDialog(bookId) {
+            // Set the book id in the hidden input of the form
+            document.getElementById('bookId').value = bookId;
+            // Display the modal
+            document.getElementById('confirmModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        // Close the modal if user clicks outside the modal content
+        window.onclick = function(event) {
+            var modal = document.getElementById('confirmModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 
     <!-- Borrowed Books Section -->
     <div class="section borrowed-books" th:if="${currentUser != null and !currentUser.borrowedBooks.isEmpty()}">
