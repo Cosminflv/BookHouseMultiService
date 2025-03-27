@@ -73,26 +73,19 @@ public class BookHouseController {
 
     @PostMapping("/borrowBook")
     public Optional<BorrowedBookEntity> borrowBook(@RequestParam Long userId, @RequestParam Long bookId) {
-        Optional<UserEntity> foundUser = userService.getUser(userId);
-        if(foundUser.isEmpty()) return Optional.empty();
-
-        Optional<BookEntity> foundBook = bookHouseService.getBook(foundUser.get().getBookHouseEntity().getId(), bookId);
-        if(foundBook.isEmpty()) return Optional.empty();
-
-        List<BorrowedBookEntity> updatedBorrowedBooks = foundUser.get().getBorrowedBooks();
-        BorrowedBookEntity bookToBorrow = new BorrowedBookEntity();
-        bookToBorrow.setUser(foundUser.get()); // Set the user on the borrowed book
-        bookToBorrow.setBook(foundBook.get());
-        bookToBorrow.setReturned(false);
-        bookToBorrow.setBorrowedAt(LocalDateTime.now());
-        bookToBorrow.setReturnDate(LocalDateTime.now().plusMonths(1));
-
-        updatedBorrowedBooks.add(bookToBorrow);
-
-        foundUser.get().setBorrowedBooks(updatedBorrowedBooks);
-
-        bookHouseService.decreaseBookStock(foundUser.get().getBookHouseEntity().getId(), bookId);
-
-        return Optional.of(bookToBorrow);
+        return userService.getUser(userId).flatMap(user ->
+                bookHouseService.getBook(user.getBookHouseEntity().getId(), bookId).map(book -> {
+                    BorrowedBookEntity borrowedBook = new BorrowedBookEntity();
+                    borrowedBook.setUser(user);
+                    borrowedBook.setBook(book);
+                    borrowedBook.setReturned(false);
+                    borrowedBook.setBorrowedAt(LocalDateTime.now());
+                    borrowedBook.setReturnDate(LocalDateTime.now().plusMonths(1));
+                    user.getBorrowedBooks().add(borrowedBook);
+                    bookHouseService.decreaseBookStock(user.getBookHouseEntity().getId(), bookId);
+                    return borrowedBook;
+                })
+        );
     }
+
 }
