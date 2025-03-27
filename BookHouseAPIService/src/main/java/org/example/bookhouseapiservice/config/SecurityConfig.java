@@ -27,6 +27,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/login").permitAll()
                         .requestMatchers(
                                 "/bookhouse/getBooks",
+                                "/bookhouse/getBookHouse",
                                 "/bookhouse/addBook",
                                 "/bookhouse/addBookhouse",
                                 "/users/addUser",

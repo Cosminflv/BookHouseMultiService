@@ -24,10 +24,20 @@ public class BookHouseController {
     // GET
 
     @GetMapping("/getBooks")
-    public List<BookEntity> getBooks(@RequestBody Long bookHouseId) {
+    public List<BookEntity> getBooks(@RequestParam Long bookHouseId) {
         try{
             return bookHouseService.getAllBooksFromBookHouse(bookHouseId);
         } catch (HttpClientErrorException e) {
+            throw new ResponseStatusException(e.getStatusCode(), e.getResponseBodyAsString());
+        }
+    }
+
+    @GetMapping("/getBookHouse")
+    public BookHouseEntity getBookHouse(@RequestParam Long bookHouseId) {
+        try{
+            BookHouseEntity bookHouse = bookHouseService.getBookHouseById(bookHouseId);
+            return bookHouse;
+        } catch(HttpClientErrorException e) {
             throw new ResponseStatusException(e.getStatusCode(), e.getResponseBodyAsString());
         }
     }

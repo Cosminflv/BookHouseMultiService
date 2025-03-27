@@ -24,6 +24,13 @@ public class BookHouseService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid BookHouse id: " + bookHouseId));
         return bookHouse.getBooks();
     }
+
+    @Transactional
+    public BookHouseEntity getBookHouseById(Long bookHouseId) {
+        return bookHouseRepository.findById(bookHouseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid BookHouse id: " + bookHouseId));
+    }
+
     @Transactional
     public BookHouseEntity addBookHouse(BookHouseEntity bookHouse) {
         return bookHouseRepository.save(bookHouse);

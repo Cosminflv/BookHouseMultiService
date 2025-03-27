@@ -17,4 +17,7 @@ public class UserService {
     public UserEntity saveUser(UserEntity user) {
         return userRepository.save(user);
     }
+
+    @Transactional
+    public UserEntity getUser(Long userId) { return userRepository.findById(userId).orElse(null); }
 }

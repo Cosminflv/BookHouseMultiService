@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter
+@Setter
 public class BookHouseEntity {
 
     private Long id;

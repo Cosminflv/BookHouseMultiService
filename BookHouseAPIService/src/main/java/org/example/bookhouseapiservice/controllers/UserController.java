@@ -13,6 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -64,16 +65,6 @@ public class UserController {
             }
         }
 
-    @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
-        String url = authServiceUrl + "/login";
-        try {
-            return restTemplate.postForObject(url, request, LoginResponse.class);
-        } catch (HttpClientErrorException e) {
-            throw new ResponseStatusException(e.getStatusCode(), e.getResponseBodyAsString());
-        }
-    }
-
     @GetMapping("/users")
     public List<UserEntity> getAllUsers(HttpServletRequest request) {
         String url = authServiceUrl + "/users";
@@ -98,5 +89,10 @@ public class UserController {
         } catch (HttpClientErrorException e) {
             throw new ResponseStatusException(e.getStatusCode(), e.getResponseBodyAsString());
         }
+    }
+
+    @GetMapping("/user")
+    public UserEntity getUser(@RequestParam Long userId) {
+        return userService.getUser(userId);
     }
 }
