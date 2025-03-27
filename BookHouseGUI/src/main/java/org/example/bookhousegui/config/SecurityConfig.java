@@ -19,6 +19,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Configuration
 @EnableWebSecurity
@@ -58,9 +61,24 @@ public class SecurityConfig {
                                                 HttpServletResponse response,
                                                 Authentication authentication) throws IOException {
                 HttpSession session = request.getSession();
-                // Store authentication details in session
-                session.setAttribute("authToken", authentication.getDetails());
+
+                // Retrieve authentication details
+                Object details = authentication.getDetails();
+                if (details instanceof Map) {
+                    @SuppressWarnings("unchecked")
+                    Map<String, Object> authDetails = (Map<String, Object>) details;
+
+                    String token = (String) authDetails.get("token");
+                    Long userId = (Long) authDetails.get("userId");
+
+                    // Store token and userId in session
+                    session.setAttribute("authToken", token);
+                    session.setAttribute("userId", userId);
+                }
+
+                // Store username separately
                 session.setAttribute("username", authentication.getName());
+
                 response.sendRedirect("/dashboard");
             }
         };
@@ -88,7 +106,10 @@ public class SecurityConfig {
                                 password,
                                 Collections.singletonList(new SimpleGrantedAuthority("USER"))
                         );
-                        auth.setDetails(response.getToken()); // Store JWT token in details
+                        Map<String, Object> details = new HashMap<>();
+                        details.put("token", response.getToken());
+                        details.put("userId", response.getUserId());
+                        auth.setDetails(details); // Store JWT token in details
                         return auth;
                     }
                     throw new RuntimeException("Invalid credentials");

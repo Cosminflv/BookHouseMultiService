@@ -10,4 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginResponse {
     private final String token;
+    private Long userId;
 }

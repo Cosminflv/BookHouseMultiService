@@ -60,7 +60,7 @@ public class UserAuthController  {
             );
         }
         String token = jwtUtils.generateToken(foundUser.getUsername());
-        return new LoginResponse(token);
+        return new LoginResponse(token, foundUser.getId());
     }
 
     @GetMapping("/users")

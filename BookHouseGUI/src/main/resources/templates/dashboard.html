@@ -52,8 +52,8 @@
             </thead>
             <tbody>
             <tr th:each="borrowedBook : ${currentUser.borrowedBooks}">
-                <td th:text="${borrowedBook.book.title}"></td>
-                <td th:text="${borrowedBook.book.author}"></td>
+                <td th:text="${borrowedBook.title}"></td>
+                <td th:text="${borrowedBook.author}"></td>
                 <td th:text="${#temporals.format(borrowedBook.borrowedAt, 'dd MMM yyyy HH:mm')}"></td>
                 <td>
                     <span th:if="${borrowedBook.returnDate != null}"

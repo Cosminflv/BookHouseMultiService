@@ -37,7 +37,9 @@ public class MainController {
             return "redirect:/login";
         }
 
-        String token = session.getAttribute("authToken").toString();
+        // Retrieve token and userId from session
+        String token = (String) session.getAttribute("authToken");
+        Long userId = (Long) session.getAttribute("userId"); // Fix: Retrieve userId properly
 
         // Create headers for the outgoing request and add the Authorization header
         HttpHeaders headers = new HttpHeaders();
@@ -45,7 +47,6 @@ public class MainController {
             headers.set("Authorization", "Bearer " + token);
         }
 
-        long userId = 6;
         long bookHouseId = 1; // Example ID
 
         BookHouseDTO bookHouseDto = restTemplate.exchange(
