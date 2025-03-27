@@ -7,13 +7,14 @@
 </head>
 <body>
 <div class="container">
-    <!-- Welcome Message -->
+    <!-- Welcome Message with Logout Button -->
     <div class="welcome-message" th:if="${currentUser != null}">
+        <!-- Logout Button positioned at the top left -->
+        <a th:href="@{/logout}" class="logout-button">Logout</a>
         <h1>Welcome Back, <span th:text="${currentUser.username}"></span></h1>
         <h2>Book house: <span th:text="${bookHouse.location}"></span></h2>
     </div>
 
-    <!-- Available Books Section -->
     <!-- Available Books Section -->
     <div class="section available-books" th:if="${bookHouse != null and !bookHouse.books.isEmpty()}">
         <h2>📚 Available Books</h2>
@@ -64,9 +65,7 @@
     <!-- JavaScript for modal handling -->
     <script>
         function openConfirmDialog(bookId) {
-            // Set the book id in the hidden input of the form
             document.getElementById('bookId').value = bookId;
-            // Display the modal
             document.getElementById('confirmModal').style.display = 'block';
         }
 
@@ -74,7 +73,6 @@
             document.getElementById('confirmModal').style.display = 'none';
         }
 
-        // Close the modal if user clicks outside the modal content
         window.onclick = function(event) {
             var modal = document.getElementById('confirmModal');
             if (event.target == modal) {

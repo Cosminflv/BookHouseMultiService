@@ -1,6 +1,7 @@
 package org.example.bookhousegui.config;
 
 import org.example.bookhousegui.dtos.LoginResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -28,6 +29,9 @@ import java.util.Objects;
 public class SecurityConfig {
 
     private final RestTemplate restTemplate;
+
+    @Value("${auth.service.url}")
+    private String authServiceUrl;
 
     public SecurityConfig(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -95,7 +99,7 @@ public class SecurityConfig {
 
                 try {
                     LoginResponse response = restTemplate.postForObject(
-                            "http://localhost:8080/login",
+                            authServiceUrl + "/login",
                             new org.example.bookhousegui.dtos.LoginRequest(username, password),
                             LoginResponse.class
                     );

@@ -6,6 +6,7 @@ import org.example.bookhousegui.dtos.UserEntityDTO;
 import org.example.bookhousegui.models.BookHouseEntity;
 import org.example.bookhousegui.models.BorrowedBookEntity;
 import org.example.bookhousegui.models.UserEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,9 @@ import static org.example.bookhousegui.utils.Converters.convertUserToEntity;
 public class MainController {
 
     final RestTemplate restTemplate;
+
+    @Value("${api.base.url}")
+    private String apiServiceUrl;
 
     public MainController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -52,7 +56,7 @@ public class MainController {
         long bookHouseId = 1; // Example ID
 
         BookHouseDTO bookHouseDto = restTemplate.exchange(
-                "http://localhost:8081/bookhouse/getBookHouse?bookHouseId={bookHouseId}",
+                apiServiceUrl + "/bookhouse/getBookHouse?bookHouseId={bookHouseId}",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
                 BookHouseDTO.class, // Use the DTO class here
@@ -62,12 +66,10 @@ public class MainController {
         // Convert DTO to your GUI's BookHouseEntity (see Step 3)
         BookHouseEntity bookHouse = convertBookHouseToEntity(bookHouseDto);
 
-
-
         model.addAttribute("bookHouse", bookHouse);
 
         UserEntityDTO userDTO = restTemplate.exchange(
-                "http://localhost:8081/users/user?userId={userId}",
+                apiServiceUrl + "/users/user?userId={userId}",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
                 new ParameterizedTypeReference<UserEntityDTO>() {},
@@ -78,7 +80,7 @@ public class MainController {
         Long userIdRetrieved = userEntity.getId();
 
         List<BorrowedBookEntity> borrowedBooks = restTemplate.exchange(
-                "http://localhost:8081/users/borrowedBooks?userId={userIdRetrieved}",
+                apiServiceUrl + "/users/borrowedBooks?userId={userIdRetrieved}",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
                 new ParameterizedTypeReference<List<BorrowedBookEntity>>() {},
@@ -112,7 +114,7 @@ public class MainController {
 
         // Call the API service to borrow the book using POST request
         restTemplate.exchange(
-                "http://localhost:8081/bookhouse/borrowBook?userId={userId}&bookId={bookId}",
+                apiServiceUrl + "/bookhouse/borrowBook?userId={userId}&bookId={bookId}",
                 HttpMethod.POST,
                 new HttpEntity<>(headers),
                 Void.class,
